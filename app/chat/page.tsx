@@ -3,7 +3,7 @@ import TypeArea from "../ui/typearea"
 
 const Page = () =>{
     return (
-        <div>
+        <div className="h-full w-full">
             <ChatArea />
             <TypeArea />
         </div>

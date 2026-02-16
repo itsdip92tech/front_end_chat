@@ -3,10 +3,10 @@ import TypeArea from "./typearea"
 
 const ChatWindow = ()=>{
     return(
-        <div>
+        <>
             <ChatArea />
             <TypeArea />
-        </div>
+        </>
     )
 }
 
