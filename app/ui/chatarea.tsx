@@ -1,6 +1,6 @@
 'use client';
 
-import { useState,useEffect, useRef } from "react";
+import { useState,useEffect, useRef,useCallback } from "react";
 import  Message  from "../components/message";
 import Image from 'next/image';
 import BackgroundImg from '../../public/Body_BG.png';
@@ -16,23 +16,7 @@ const ChatArea = ({_id,author,message,createdAt}:MessageInterface)=>{
         chatEndRef.current?.scrollIntoView({behavior:'smooth'});
     }
 
-    useEffect(()=>{
-        if(chatMessages.length>0)
-        scrollToBottom();
-    },[chatMessages]);
-
-    useEffect(()=>{
-        if(author != "" && message !=""){
-            const newMessage = {_id,author,message,createdAt}
-            setChatMessages((prev)=>[...prev,newMessage]); 
-        }
-    },[author,message,createdAt])
-
-    useEffect(()=>{
-         fetchData();   
-    },[])
-
-    const fetchData = async() =>{
+    const fetchData =useCallback(async() =>{
         const token = 'super-secret-doodle-token'
 
         try{
@@ -56,12 +40,34 @@ const ChatArea = ({_id,author,message,createdAt}:MessageInterface)=>{
 
                 })
 
-                setChatMessages(formattedData)
+                setChatMessages(()=>formattedData)
             };
         }catch(err){
             console.log('Fetch error:',err);
         }        
-    }
+    },[]);
+
+
+    // Scroll to bottom on initial load or when new chat message arrives
+    useEffect(()=>{
+        if(chatMessages.length>0)
+        scrollToBottom();
+    },[chatMessages]);
+
+    useEffect(()=>{
+        if(author != "" && message !=""){
+            console.log(author)
+            const newMessage = {author,message,createdAt}
+            setChatMessages((prev)=>[...prev,newMessage]); 
+        }
+    },[author,message,createdAt])
+
+    useEffect(()=>{
+        fetchData();
+        const polling = setInterval(fetchData,5000);   
+        return()=>clearInterval(polling);
+    },[fetchData])
+
 
     return(
         <div className="h-[90%] relative">
