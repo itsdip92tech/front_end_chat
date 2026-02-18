@@ -1,11 +1,9 @@
-import ChatArea from "../ui/chatarea"
-import TypeArea from "../ui/typearea"
+import ChatWindow from "../ui/chatWindow";
 
 const Page = () =>{
     return (
         <div className="h-full w-full">
-            <ChatArea />
-            <TypeArea />
+            <ChatWindow />
         </div>
     )
 }

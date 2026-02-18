@@ -2,8 +2,11 @@
 import { useState } from 'react';
 import Input from '../components/input';
 import Button from '../components/button';
+import moment from 'moment';
 
-const TypeArea = ()=>{
+
+
+const TypeArea = ({handleUserMessage}:{handleUserMessage:(author:string,message:string,dateTime:string)=>void})=>{
 
     const [message,setMessage] = useState<string>("");
 
@@ -12,12 +15,17 @@ const TypeArea = ()=>{
     }
 
     const handleSend = async ()=>{
-        console.log(message)
+        if(message == "") return;
+        const author = 'John Doe';
+        const dateTime = moment().format('D MMM YYYY, HH:mm');
         const token = 'super-secret-doodle-token'
         const payload = {
             message: message,
-            author: 'John Doe'
+            author: author
         }
+
+        handleUserMessage(author,message,dateTime)
+        
         try{
             const response = await fetch("http://localhost:3000/api/v1/messages",{
                 method: 'POST',
@@ -30,6 +38,7 @@ const TypeArea = ()=>{
 
             if(!response.ok) throw new Error('Unauthorized access');
             const data = await response.json();
+            if(data) setMessage("");
             console.log(data);
         }catch(err){
             console.log('Fetch error:',err);
@@ -39,7 +48,7 @@ const TypeArea = ()=>{
     return (
         <div className='h-[10%] w-full bg-[#3798d4] flex justify-center items-center'>
             <Input message={message} onChange={handleChange}/>
-            <Button onClick={handleSend}/>
+            <Button onClick={handleSend} />
         </div>
     )
 }

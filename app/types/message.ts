@@ -1,6 +1,7 @@
 export interface MessageInterface{
-    _id: string,
+    _id?: string,
     message: string,
     author: string,
-    createdAt: string
+    createdAt: string,
+    isPosted?: string
 }
