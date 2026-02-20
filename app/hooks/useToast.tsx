@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import ToastComponent from "../ui/toast";
+import ToastComponent from "../components/toast";
 
 export type Type = "info"|"success"|"error"|"warning";
 
@@ -49,7 +49,7 @@ const useToast = (Position:Position="top-left")=>{
 
     const NotificationComponent = notification.length>0? 
         
-            <div className={`${Position}`}>
+            <div className={`${Position} z-[10]`}>
                 {notification.map((t)=>(
                     <ToastComponent key={t.id} type={t.type} msg={t.message} closeToast={()=>closeNotification(t.id)}/>
                 ))}            

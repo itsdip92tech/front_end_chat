@@ -1,6 +1,7 @@
-import ChatWindow from "../ui/chatWindow";
+import ChatWindow from "../components/chatWindow";
 
-const Page = () =>{
+const Page = async() =>{
+
     return (
         <div className="h-full w-full">
             <ChatWindow />

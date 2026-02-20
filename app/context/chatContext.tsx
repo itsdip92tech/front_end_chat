@@ -50,6 +50,10 @@ export function ChatProvider({children}:{children:React.ReactNode}){
                 setError("");
             };
         }catch(err){
+          if (err instanceof Error && err.name  === 'AbortError') {
+            return; 
+          }
+          if(isMounted)
           setError("Unable to fetch messages")
         }finally{
           isFetching.current = false;

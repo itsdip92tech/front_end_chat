@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 import BackgroundImg from '../../public/Body_BG.png';
+import  useToast from '../hooks/useToast';
 
 const Login = ()=>{
 
@@ -12,6 +13,8 @@ const Login = ()=>{
     const userRef = useRef<HTMLInputElement>(null);
 
     const router = useRouter();
+
+    const { triggerNotification, NotificationComponent } = useToast("top-left");
 
     useEffect(()=>{
         userRef.current?.focus();
@@ -25,12 +28,17 @@ const Login = ()=>{
     // Mock auth setup.
     const handleSubmit = (e:React.SubmitEvent<HTMLFormElement>)=>{
         e.preventDefault();
+        if(!user || user.length < 3){
+            triggerNotification({duration:3000,type:'error',message: 'Minimum 3 characters'});
+            return;
+        }
         localStorage.setItem('author',user);
         setUser("");
         router.push('/chat');
     }
     return(
-        <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="login-wrapper">
+            { NotificationComponent }
               <Image 
                 src={BackgroundImg}
                 alt="Login background image"
@@ -38,6 +46,7 @@ const Login = ()=>{
                 priority
                 className="object-cover -z-10"
             ></Image>
+            <div className='font-chancery text-4xl mb-8'>Doodle Chat</div>
             <form className="login-form" onSubmit={handleSubmit}>
                 <label className="text-xl mb-4" htmlFor="author">
                     Login

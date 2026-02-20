@@ -8,10 +8,13 @@ const fetchWithRetries = async(url:string,options:RequestInit,retries:number = M
     try{
         // Fetc
         const response = await fetch(url,options);
-        if(response.status>500) throw new Error(`Couldn't connect to the server`);
+        if(!response.ok || response.status>500 || response.status == 429) throw new Error(`Couldn't connect to the server`);
         return response;
     }
     catch(err){
+        if (err instanceof Error && err.name === 'AbortError') {
+           throw err; 
+        }
         if(retries > 0){
             // Retry 3 times if a call fails after every 5 seconds.
             await new Promise((resolve)=>{

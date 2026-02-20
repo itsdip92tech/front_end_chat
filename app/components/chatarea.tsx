@@ -41,7 +41,7 @@ const ChatArea = ()=>{
                 priority
                 className="object-cover -z-10"
             ></Image>
-            <div className="absolute inset-0 overflow-y-auto pl-10 pr-10 md:pl-20 md:pr-20 pt-10 pb-10 h-[95%] flex flex-col">
+            <div className="chat-wrapper">
                 {messages.map(message=>
                     <Message key={message._id} author={message.author} message={message.message} createdAt={message.createdAt} _id={message._id} />                
                 )}

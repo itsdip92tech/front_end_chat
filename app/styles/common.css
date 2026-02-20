@@ -1,11 +1,11 @@
-@reference "../globals.css"
+@reference "../globals.css";
 
 .login-wrapper{
     @apply w-full h-full flex flex-col justify-center items-center;
 }
 
 .login-form{
-    @apply w-[90%] p-4 md:w-[75%] lg:w-[50%] lg:h-[30%] xl:w-[30%] xl:h-[50%] lg:p-8 flex flex-col border border-[#3798d4] rounded-lg justify-center text-center;
+    @apply w-[90%] h-[30%] p-4 md:w-[60%] md:min-h-[25%] md:h-min lg:w-[50%] xl:w-[30%] xl:h-[40%] lg:p-8 flex flex-col border border-[#3798d4] rounded-lg justify-center text-center;
 }
 
 .login-input{
@@ -13,9 +13,40 @@
 }
 
 .login-button{
-    @apply h-[2rem] bg-[#ff876d] rounded-md text-white mt-2 cursor-pointer;
+    @apply h-[2.5rem] bg-[#ff876d] rounded-md text-white mt-2 cursor-pointer hover:bg-[#f07960] focus:outline-orange-500 active:scale-95 transition-transform px-4 py-2;
 }
 
+.chat-wrapper{
+    @apply absolute inset-0 overflow-y-auto mt-4 pl-10 pr-10 md:pl-25 md:pr-25 pt-10 pb-10 lg:pl-30 lg:pr-30 xl:pl-40 xl:pr-40 h-[95%] flex flex-col
+}
+
+.message-wrapper-user{
+    @apply min-h-min mt-2 mb-2 p-[0.8rem] md:p-4 self-end bg-yellow-100 max-w-[75%] w-fit rounded-md border border-gray-300;
+}
+
+.message-wrapper{
+    @apply min-h-min mt-2 mb-2 p-[0.8rem] md:p-4 self-start bg-white max-w-[75%] w-fit rounded-md border border-gray-300;
+}
+
+.message-author{
+   @apply text-gray-400 text-xs md:text-base lg:text-xl xl:text-base;
+}
+
+.message{
+    @apply sm:mt-[8px] sm:mb-[8px] md:mt-[10px] md:mb-[10px] text-sm md:text-xl lg:text-2xl xl:text-xl;
+}
+
+.message-createdat{
+    @apply text-gray-400 text-xs md:text-base lg:text-xl xl:text-base;
+}
+
+.message-input{
+    @apply w-[60%] h-[75%] text-base md:text-2xl xl:text-xl xl:w-[70%] bg-white border-2 md:border-4 border-sky-600 rounded-md p-2 md:pl-4 focus:border-sky-600 focus:outline-none mr-2 px-4 py-2 outline-none transition-colors;
+}
+
+.message-button{
+    @apply w-[20%] h-[75%] xl:w-[15%] bg-[#ff876d] rounded-md text-white ml-2 cursor-pointer text-base font-medium md:text-2xl xl:text-xl hover:bg-[#f07960] focus:outline-orange-500 active:scale-95 transition-transform px-4 py-2;
+}
 
 .toast-wrapper{
     @apply p-4 text-base flex justify-evenly items-center border border-black rounded-lg;
@@ -33,18 +64,14 @@
     @apply cursor-pointer z-[10];
 }
 
-
-
-.skeleton{
-    animation: skeleton-loading 1s linear infinite alternate;
+.loading-skeleton{
+    @apply h-[20%] w-[50%] xl:w-[30%] mb-8 flex flex-col gap-4 p-4 animate-pulse h-10 bg-gray-200 rounded w-1/4;
 }
 
-@keyframes skeleton-loading{
-    0%{
-        background-color: hsl(200, 20%, 70%);
-    }
+.error-wrapper{
+  @apply h-full relative flex flex-col justify-center items-center
+}
 
-    100%{
-        background-color: hsl(200, 20%, 95%);
-    }
+.error-button{
+    @apply w-[30%] h-[5%] lg:h-[7%] lg:w-[12%] mt-8 bg-[#ff876d] rounded-md text-white ml-2 cursor-pointer md:text-2xl hover:bg-[#f07960] focus:outline-orange-500 active:scale-95 transition-transform px-4 py-2;
 }
