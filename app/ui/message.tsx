@@ -1,8 +1,8 @@
+// Eligible to be server component
+
 import { MessageInterface } from '../types/message';
 
 const Message = (props:MessageInterface)=>{
-    console.log(props.author);
-    console.log(localStorage.getItem("author"))
     const messageContent = <>
                                 <span className='text-gray-400 text-sm md:text-lg'>{props.author}</span>
                                 <p className='sm:mt-[8px] sm:mb-[8px] md:mt-[10px] md:mb-[10px] text-sm md:text-2xl'>{props.message}</p>

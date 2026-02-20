@@ -5,3 +5,8 @@ export interface MessageInterface{
     createdAt: string,
     isPosted?: string
 }
+
+export interface ChatContextType{
+    messages: MessageInterface[],
+    error: string | null
+}

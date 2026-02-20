@@ -38,12 +38,12 @@ const Login = ()=>{
                 priority
                 className="object-cover -z-10"
             ></Image>
-            <form className="w-[90%] p-4 lg:w-[50%] lg:h[30%] xl:w-[30%] xl:h-[50%] lg:p-8 flex flex-col border border-[#3798d4] rounded-lg justify-center text-center" onSubmit={handleSubmit}>
+            <form className="login-form" onSubmit={handleSubmit}>
                 <label className="text-xl mb-4" htmlFor="author">
                     Login
                 </label>
-                <input id="author" className="border-2 border-[#3798d4] rounded-md p-2 mb-4 focus:border-[#3798d4] focus:outline-none" value={user} ref={userRef} placeholder="Enter user name" onChange={handleChange}></input>
-                <button className="h-[2rem] bg-[#ff876d] rounded-md text-white mt-2 cursor-pointer" type="submit">Login</button>
+                <input id="author" className="login-input" value={user} ref={userRef} placeholder="Enter user name" onChange={handleChange}></input>
+                <button className="login-button" type="submit">Login</button>
             </form>
         </div>
     )
