@@ -1,15 +1,14 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
-import moment from 'moment';
+import { useChat } from '../context/chatContext';
 
 
-
-const TypeArea = ({handleUserMessage}:{handleUserMessage:(author:string,message:string,dateTime:string)=>void})=>{
-
+const TypeArea = ()=>{
     const [message,setMessage] = useState<string>("");
 
     const messageRef = useRef<HTMLInputElement>(null);
 
+    const { sendMessage, error } = useChat();
     useEffect(()=>{
         messageRef.current?.focus();
     },[])
@@ -22,32 +21,8 @@ const TypeArea = ({handleUserMessage}:{handleUserMessage:(author:string,message:
         e.preventDefault();
         if(message == "") return;
         const author = localStorage.getItem('author') || "";
-        const dateTime = moment().format('D MMM YYYY, HH:mm');
-        const token = 'super-secret-doodle-token'
-        const payload = {
-            message: message,
-            author: author
-        }
-
-        handleUserMessage(author,message,dateTime)
-        
-        try{
-            const response = await fetch("http://localhost:3000/api/v1/messages",{
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-
-            if(!response.ok) throw new Error('Unauthorized access');
-            const data = await response.json();
-            if(data) setMessage("");
-            console.log(data);
-        }catch(err){
-            console.log('Fetch error:',err);
-        }        
+        sendMessage(author,message);
+        setMessage("");
     }
 
     return (

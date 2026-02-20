@@ -17,10 +17,26 @@
 }
 
 
+.toast-wrapper{
+    @apply p-4 text-base flex justify-evenly items-center border border-black rounded-lg;
+}
+
+.top-left{
+    @apply absolute top-[1rem] left-[1rem];
+}
+
+.error{
+   @apply text-red-500 font-semibold bg-red-100;
+}
+
+.toast-close{
+    @apply cursor-pointer z-[10];
+}
+
 
 
 .skeleton{
-    animation: skeleton-loading 1s linear infinite alternate
+    animation: skeleton-loading 1s linear infinite alternate;
 }
 
 @keyframes skeleton-loading{

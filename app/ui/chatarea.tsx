@@ -5,6 +5,7 @@ import  Message  from "./message";
 import Image from 'next/image';
 import BackgroundImg from '../../public/Body_BG.png';
 import { useChat } from "../context/chatContext";
+import  useToast from '../hooks/useToast';
 
 const ChatArea = ()=>{
 
@@ -15,16 +16,24 @@ const ChatArea = ()=>{
         chatEndRef.current?.scrollIntoView({behavior:'smooth'});
     }
 
+    const { triggerNotification, NotificationComponent } = useToast("top-left");
+
     // Scroll to bottom on initial load or when new chat message arrives
     useEffect(()=>{
         if(messages.length>0)
         scrollToBottom();
+        
     },[messages]);
 
-    console.log('Chat area re-rendered')
+    useEffect(()=>{
+        if(error)
+        triggerNotification({duration:3000,type:'error',message: error});
+        
+    },[error]);
     
     return(
         <div className="h-[90%] relative">
+            {NotificationComponent}
             <Image 
                 src={BackgroundImg}
                 alt="Background image"
