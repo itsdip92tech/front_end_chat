@@ -1,7 +1,5 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
-import Input from '../components/input';
-import Button from '../components/button';
 import moment from 'moment';
 
 
@@ -20,7 +18,8 @@ const TypeArea = ({handleUserMessage}:{handleUserMessage:(author:string,message:
         setMessage(e.target.value);
     }
 
-    const handleSend = async ()=>{
+    const handleSend = async (e:React.SubmitEvent<HTMLFormElement>)=>{
+        e.preventDefault();
         if(message == "") return;
         const author = localStorage.getItem('author') || "";
         const dateTime = moment().format('D MMM YYYY, HH:mm');
@@ -52,10 +51,10 @@ const TypeArea = ({handleUserMessage}:{handleUserMessage:(author:string,message:
     }
 
     return (
-        <div className='h-[10%] w-full bg-[#3798d4] flex justify-center items-center'>
-            <Input id='message' ref={messageRef} placeholder='Type a message' value={message} onChange={handleChange}/>
-            <Button button='Send' onClick={handleSend} />
-        </div>
+        <form className="h-[10%] w-full bg-[#3798d4] flex justify-center items-center" onSubmit={handleSend}>
+            <input id="message" aria-label='User Message' className="w-[60%] h-[75%] md:text-2xl bg-white border-2 border-[#3798d4] rounded-md p-2 focus:border-[#3798d4] focus:outline-none mr-2" value={message} ref={messageRef} placeholder="Type a message" onChange={handleChange}></input>
+            <button className="w-[20%] h-[75%] bg-[#ff876d] rounded-md text-white ml-2 cursor-pointer md:text-2xl" type="submit">Send</button>
+        </form>
     )
 }
 

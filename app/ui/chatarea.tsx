@@ -31,7 +31,8 @@ const ChatArea = ({_id,author,message,createdAt}:MessageInterface)=>{
             if(!response.ok) throw new Error('Unauthorized access');
             const messageData: MessageInterface[] = await response.json();
 
-            if(messageData.length>0){
+            //Check added to update state only if last message id is different
+            if(messageData.length>0 && messageData[messageData.length-1]?._id != chatMessages[chatMessages.length-1]?._id){
                 const formattedData = messageData.map(data=>{
                     return{
                         ...data,
@@ -54,17 +55,20 @@ const ChatArea = ({_id,author,message,createdAt}:MessageInterface)=>{
         scrollToBottom();
     },[chatMessages]);
 
+    // Update local state if the component props receive a new message.
     useEffect(()=>{
         if(author != "" && message !=""){
             console.log(author)
-            const newMessage = {author,message,createdAt}
+            const newMessage = {_id,author,message,createdAt}
             setChatMessages((prev)=>[...prev,newMessage]); 
         }
     },[author,message,createdAt])
 
+
+    // Fetch messages every 10 seconds
     useEffect(()=>{
         fetchData();
-        const polling = setInterval(fetchData,5000);   
+        const polling = setInterval(fetchData,10000);   
         return()=>clearInterval(polling);
     },[fetchData])
 
@@ -78,7 +82,7 @@ const ChatArea = ({_id,author,message,createdAt}:MessageInterface)=>{
                 priority
                 className="object-cover -z-10"
             ></Image>
-            <div className="absolute inset-0 overflow-y-auto pl-20 pr-20 pt-10 pb-10 flex flex-col">
+            <div className="absolute inset-0 overflow-y-auto pl-10 pr-10 md:pl-20 md:pr-20 pt-10 pb-10 h-[95%] flex flex-col">
                 {chatMessages.map(message=>
                     <Message key={message._id} author={message.author} message={message.message} createdAt={message.createdAt} _id={message._id} />                
                 )}
